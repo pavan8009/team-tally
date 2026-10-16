@@ -168,6 +168,34 @@ button.row:hover{background:linear-gradient(90deg,transparent,var(--soft) 30%,va
 .set-row small{display:block;font-size:13.5px;color:var(--mute);font-weight:400}
 .set-row svg.chev{width:18px;height:18px;color:var(--mute)}
 
+/* families, treasurer, next step */
+.lead{font-size:15px;color:var(--mute);margin:8px 0 0;max-width:56ch}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border:1px solid var(--line);color:var(--mute);white-space:nowrap}
+.fchip{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;padding:3px 9px 3px 7px;background:var(--soft);color:var(--text);white-space:nowrap}
+.fchip svg,.crown svg,.fic svg,.chip svg.i{width:15px;height:15px;color:var(--accent)}
+.crown{display:inline-grid;place-items:center;color:var(--accent)}
+.stats3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1.5px solid var(--line);background:var(--card)}
+.stats3>div{padding:12px 14px;min-width:0}.stats3>div+div{border-left:1px solid var(--line)}
+.stats3 b{display:block;font-family:var(--display);font-weight:600;font-size:22px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.next{margin-top:14px;border:1.5px solid var(--text);background:var(--card);padding:16px}
+.next-h{font-size:18px;font-weight:700;line-height:1.25;margin-top:4px}
+.next p{font-size:14.5px;color:var(--mute);margin:6px 0 0}.next p b{color:var(--text)}
+.next-a{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:12px}
+.fgrid{display:grid;gap:12px}@media(min-width:700px){.fgrid{grid-template-columns:1fr 1fr}}
+.fcard{border:1.5px solid var(--line);background:var(--card)}
+.fcard-h{display:flex;gap:12px;align-items:center;width:100%;padding:14px;border-bottom:1px solid var(--line);text-align:left}
+.fcard-h .t{font-size:16.5px;font-weight:700}.fcard-h .s{font-size:13.5px;color:var(--mute)}
+.fic{width:40px;height:40px;display:grid;place-items:center;background:var(--soft);flex:none}.fic svg{width:20px;height:20px}
+.mrow{display:flex;gap:10px;align-items:center;width:100%;padding:10px 14px;text-align:left;border-top:1px solid var(--line)}
+.mrow:first-of-type{border-top:0}.mrow .mname{flex:1;min-width:0;font-size:15.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mrow:hover,.fcard-h:hover{background:var(--soft)}
+.tcard{display:flex;gap:14px;align-items:flex-start;border:1.5px solid var(--text);background:var(--card);padding:14px}
+.step{margin-top:16px;border:1.5px solid var(--line);background:var(--card);padding:14px}
+.step-h{display:flex;gap:12px;align-items:center;margin-bottom:10px}.step-h b{font-size:17px}
+.num-badge{width:28px;height:28px;display:grid;place-items:center;background:var(--ink);color:var(--on-ink);font-family:var(--display);font-weight:600;flex:none}
+.prog{height:6px;background:var(--soft);margin-bottom:6px}.prog i{display:block;height:100%;background:var(--get)}
+.prow{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.prow .t{font-size:15.5px;font-weight:700}.prow .s{font-size:13.5px;color:var(--mute)}.prow .upi{margin-top:4px}
 /* bottom bar */
 .nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--card);border-top:1px solid var(--line);
   padding-left:var(--gut-l);padding-right:var(--gut-r);padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -6px 24px rgba(0,0,0,.05)}
@@ -231,6 +259,8 @@ const IC={
   team:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14a6.5 6.5 0 0 1 3.5 6"/>',
   plus:'<path d="M12 5v14M5 12h14"/>',
   arrow:'<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>',
+  house:'<path d="M3 11 12 4l9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/>',
+  crown:'<path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/>',
   chev:'<path d="m9 6 6 6-6 6"/>',
   search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
   Food:'<path d="M6 3v8a2 2 0 0 0 4 0V3M8 11v10"/><path d="M17 21V3c-2 1-3 4-3 7s1 4 3 4"/>',
@@ -245,7 +275,7 @@ const ic=(k,cls)=>`<svg class="i${cls?' '+cls:''}" viewBox="0 0 24 24" aria-hidd
 const CATS=['Food','Travel','Stay','Transport','Supplies','Fun','Other'];
 
 const S={members:[],expenses:[],settlements:[],families:[],activity:[],meta:{},loaded:{},mode:'loading',readOnly:false,backend:null,
-  me:ls.get('me'),tab:ls.get('tab')||'home',settle:ls.get('settle')||'direct',collector:ls.get('collector'),q:'',fm:'',fc:'',showAllBal:false};
+  me:ls.get('me'),tab:ls.get('tab')||'home',settle:ls.get('settle')==='direct'?'direct':'treasurer',collector:ls.get('collector'),q:'',fm:'',fc:'',showAllBal:false};
 const live=a=>a.filter(x=>!x.deletedAt);
 
 /* ======================= storage backends ======================= */
@@ -403,20 +433,21 @@ function vHome(){
       <div class="say ${v>0?'get':v<0?'owe':''}"><i></i>${v>0?'The group owes your family':v<0?'Your family owes the group':'Your family is all square'}</div>
       <div class="trio"><div><span class="lbl">Paid</span><b class="num">${money(myUnit.paid)}</b></div>
       <div><span class="lbl">Share</span><b class="num">${money(myUnit.share)}</b></div>
-      <div><span class="lbl">Group total</span><b class="num">${money(st.total)}</b></div></div>
+      <div><span class="lbl">Total</span><b class="num">${money(st.total)}</b></div></div>
       <p style="margin-top:14px;font-size:14px;color:var(--on-ink-mute)">${esc(mName(myUnit.payer))} is master and settles for ${esc(myUnit.ids.filter(i=>i!==myUnit.payer).map(mName).join(', '))}.</p>
-      ${v!==0?`<button class="btn" data-act="tab" data-id="settle">${v<0?'See who to pay':'See who pays you'}</button>`:''}</div>`;
+</div>`;
   }else if(me){const v=st.net[me.id]||0;
     hero=`<div class="hero"><span class="lbl">Your balance</span><div class="fig num">${money(v)}</div>
       <div class="say ${v>0?'get':v<0?'owe':''}"><i></i>${v>0?'The group owes you':v<0?'You owe the group':'You are all square'}</div>
       <div class="trio"><div><span class="lbl">You paid</span><b class="num">${money(st.paid[me.id])}</b></div>
       <div><span class="lbl">Your share</span><b class="num">${money(st.share[me.id])}</b></div>
-      <div><span class="lbl">Group total</span><b class="num">${money(st.total)}</b></div></div>
-      ${v!==0?`<button class="btn" data-act="tab" data-id="settle">${v<0?'See who to pay':'See who pays you'}</button>`:''}</div>`;
+      <div><span class="lbl">Total</span><b class="num">${money(st.total)}</b></div></div>
+</div>`;
   }else{
-    hero=`<div class="hero"><span class="lbl">Group total</span><div class="fig num">${money(st.total)}</div>
+    hero=`<div class="hero"><span class="lbl">Total</span><div class="fig num">${money(st.total)}</div>
       <div class="say">Pick your name to see your balance</div><div class="chips" style="margin-top:16px">${M.map(m=>`<button class="chip" data-act="setMe" data-id="${m.id}" style="background:transparent;color:inherit;border-color:color-mix(in srgb,var(--on-ink) 35%,transparent)">${esc(m.name)}</button>`).join('')}</div></div>`;
   }
+  if(me)hero+=nextStep(me.id,settlePlan());
   const sorted=U.slice().sort((a,b)=>b.net-a.net);
   const shown=S.showAllBal?sorted:sorted.slice(0,8);
   const bal=shown.map(u=>u.fam?
@@ -451,10 +482,11 @@ function vExpenses(){
   let body='',cur=null,dayTot=0,parts=[];
   const groups={};list.forEach(e=>{(groups[e.date]=groups[e.date]||[]).push(e)});
   Object.keys(groups).sort().reverse().forEach(d=>{const g=groups[d];body+=`<div class="day"><span class="lbl" style="color:var(--text)">${esc(dayLabel(d))}</span><span class="lbl num">${money(g.reduce((s,e)=>s+e.amount,0))}</span></div><div class="rows">${g.map(expRow).join('')}</div>`});
-  return `<div class="page-h"><span class="lbl">${list.length} of ${all.length} expense${all.length===1?'':'s'}</span><h1 class="num">${money(tot)}</h1></div>
+  const catTot={};all.forEach(e=>{catTot[e.category||'Other']=(catTot[e.category||'Other']||0)+e.amount});
+  return `<div class="page-h"><span class="lbl">Expenses · ${list.length} of ${all.length}</span><h1 class="num">${money(tot)}</h1><p class="lead">Everything the group spent. Tap an expense to see who shares it, edit it, or check its audit.</p></div>
   <section style="padding-top:4px"><label class="search">${ic('search')}<input id="q" type="search" placeholder="Search title, note or person" value="${esc(S.q)}" autocomplete="off" aria-label="Search expenses"></label>
   <div class="chips scroll" style="margin-bottom:8px"><button class="chip${!S.fm?' on':''}" data-act="fm" data-id="">All people</button>${M.map(m=>`<button class="chip${S.fm===m.id?' on':''}" data-act="fm" data-id="${m.id}">${esc(m.name)}</button>`).join('')}</div>
-  <div class="chips scroll"><button class="chip${!S.fc?' on':''}" data-act="fc" data-id="">All types</button>${CATS.map(c=>`<button class="chip${S.fc===c?' on':''}" data-act="fc" data-id="${c}">${c}</button>`).join('')}</div>
+  <div class="chips scroll"><button class="chip${!S.fc?' on':''}" data-act="fc" data-id="">All types</button>${CATS.filter(c=>catTot[c]).map(c=>`<button class="chip${S.fc===c?' on':''}" data-act="fc" data-id="${c}">${ic(c)}${c} <span class="num" style="opacity:.75">${money(catTot[c])}</span></button>`).join('')}</div>
   ${list.length?body:`<div class="empty"><h3>${all.length?'Nothing matches':'No expenses yet'}</h3><p>${all.length?'Try another name or clear the filters.':'Log what you spent and pick who it was for.'}</p>${all.length?'':'<button class="btn" data-act="addExpense">Add an expense</button>'}</div>`}</section>`;
 }
 
@@ -466,49 +498,102 @@ function payLine(t,byKey,showFrom){
   return `<div class="xfer"><div class="who2">${who}${avs(tu.payer)}<span>${showFrom?'':'to '}${esc(nameOrYou(tu.payer))}${tu.fam?` <span class="hint" style="font-weight:500">(${esc(tu.name)})</span>`:''}</span></div>
     <div class="amt2 num">${money(t.amount)}</div>
     <div class="foot2">${to&&to.upi?`<div class="upi">UPI <code>${esc(to.upi)}</code><button class="link" data-act="copy" data-id="${esc(to.upi)}">Copy</button></div>`:'<span class="hint">No UPI ID saved</span>'}
-    <button class="btn sm" data-confirm="1" data-act="markPaid" data-id="${fu.payer}|${tu.payer}|${t.amount}">Mark paid</button></div></div>`;
+    <button class="btn sm" data-confirm="1" data-act="markPaid" data-id="${fu.payer}|${tu.payer}|${t.amount}|direct">Mark paid</button></div></div>`;
 }
 function payGroups(list,byKey){
   const g={};list.forEach(t=>{(g[t.from]=g[t.from]||[]).push(t)});
   return Object.keys(g).sort((a,b)=>g[b].reduce((s,x)=>s+x.amount,0)-g[a].reduce((s,x)=>s+x.amount,0)).map(k=>{
     const u=byKey[k];const items=g[k];const tot=items.reduce((s,x)=>s+x.amount,0);
     return `<div style="border:1.5px solid var(--line);background:var(--card);padding:14px 14px 4px;margin-top:12px">
-      <div style="display:flex;gap:12px;align-items:center">${av(u.payer)}<div style="flex:1;min-width:0"><div style="font-weight:700;font-size:16px">${esc(nameOrYou(u.payer))} pays <span class="num">${money(tot)}</span></div>
+      <div style="display:flex;gap:12px;align-items:center">${av(u.payer)}<div style="flex:1;min-width:0"><div style="font-weight:700;font-size:16px">${u.payer===S.me?'You pay':esc(mName(u.payer))+' pays'} <span class="num">${money(tot)}</span></div>
       <div class="hint">${u.fam?forWhom(u)+' · ':''}${items.length} receiver${items.length===1?'':'s'}</div></div></div>
       <div style="margin-top:6px">${items.map(t=>payLine(t,byKey,false)).join('')}</div></div>`}).join('');
 }
+/* ---------- treasurer: one person collects from everyone, then pays out ---------- */
+const treasurer=()=>{const t=S.meta&&S.meta.treasurer;if(!t||!live(S.members).some(m=>m.id===t))return null;const k=unitKeyOf(t);const u=units().find(x=>x.key===k);return u?u.payer:null};
+const sumAmt=a=>a.reduce((s,x)=>s+x.amount,0);
+function settlePlan(){
+  const st=stats();const U=unitNets(st);const map={},byKey={};U.forEach(u=>{map[u.key]=u.net;byKey[u.key]=u});
+  const direct=planDirect(map);const T=treasurer();let tp=null;
+  if(T){const key=unitKeyOf(T);tp=planCollector(map,key);tp.key=key;tp.payer=T;const since=(S.meta&&S.meta.treasurerSince)||0;
+    tp.collected=sumAmt(live(S.settlements).filter(s=>s.kind==='collect'&&s.to===T&&(s.createdAt||0)>=since));
+    tp.paidOut=sumAmt(live(S.settlements).filter(s=>s.kind==='payout'&&s.from===T&&(s.createdAt||0)>=since));
+    tp.inLeft=sumAmt(tp.ins);tp.outLeft=sumAmt(tp.outs);tp.own=byKey[key]?byKey[key].net:0}
+  return {st,U,map,byKey,direct,T,tp};
+}
+const famChip=id=>{const f=famOf(id);if(!f)return '';const m=f.masterId;return `<span class="fchip" title="${esc(f.name)}">${ic('house')}${m===id?'Master':esc(mName(m))}</span>`};
+const relTag=id=>{const r=relOf(id);return r?`<span class="tag">${esc(r)}</span>`:''};
+const crown=id=>isMaster(id)?`<span class="crown" title="Master">${ic('crown')}</span>`:'';
+const bar=(done,total)=>{const p=total?Math.min(100,Math.round(done/total*100)):100;return `<div class="prog" role="progressbar" aria-valuenow="${p}" aria-valuemin="0" aria-valuemax="100"><i style="width:${p}%"></i></div>`};
+function breakdownFor(key,P){const L=P.direct.filter(t=>t.from===key);return L.map(t=>`${esc(P.byKey[t.to].fam?P.byKey[t.to].name:mName(P.byKey[t.to].payer))} ${money(t.amount)}`).join(' · ')}
+function upiLine(id){const m=mById(id);return m&&m.upi?`<div class="upi">UPI <code>${esc(m.upi)}</code><button class="link" data-act="copy" data-id="${esc(m.upi)}">Copy</button></div>`:`<span class="hint">No UPI ID saved for ${esc(mName(id))}</span>`}
+const payBtn=(from,to,amt,kind,label)=>`<button class="btn sm" data-confirm="1" data-act="markPaid" data-id="${from}|${to}|${amt}|${kind}">${label||'Mark paid'}</button>`;
+
+/* What should this person do next? Used on Home and on a person's page. */
+function nextStep(pid,P){
+  const m=mById(pid);if(!m)return '';const u=P.U.find(x=>x.ids.includes(pid));if(!u)return '';
+  const you=pid===S.me;const subj=u.fam?(you?'Your family':esc(u.name)):(you?'You':esc(m.name));
+  const isPayer=u.payer===pid;const payerName=esc(you&&isPayer?'You':mName(u.payer));
+  let head,body='',acts='';
+  if(P.T&&P.tp){const T=P.T;
+    if(u.key===P.tp.key){head=`${you?'You are':esc(m.name)+' is'} the treasurer`;
+      body=`Collect <b>${money(P.tp.inLeft)}</b> from ${P.tp.ins.length} · Pay out <b>${money(P.tp.outLeft)}</b> to ${P.tp.outs.length}.${P.tp.own<0?` Includes ${u.fam?'your family’s':'your'} own share of ${money(P.tp.own)}.`:''}`;
+      acts=`<button class="btn sm" data-act="tab" data-id="settle">Open settle up</button>`;}
+    else if(u.net<0){head=`${isPayer?(you?'Pay ':esc(m.name)+' pays '):payerName+' pays '}${money(u.net)} to ${esc(T===S.me?'you':mName(T))}`;
+      body=`One payment to the treasurer clears everything${u.fam?' for '+esc(u.name):''}.${!isPayer?` ${esc(mName(u.payer))} is the master and pays for the family.`:''}`;
+      acts=isPayer?`${upiLine(T)}${payBtn(u.payer,T,-u.net,'collect','Mark paid')}`:'';}
+    else if(u.net>0){const toWhom=you?(u.fam?'your family':'you'):(u.fam?esc(u.name):esc(m.name));head=`${T===S.me?'You pay':esc(mName(T))+' pays'} ${toWhom} ${money(u.net)}`;
+      body=`After collecting from everyone, the treasurer pays back what ${u.fam?(you?'your family':'the family'):(you?'you':'they')} spent.`;}
+    else{head=`${subj} ${you&&!u.fam?'are':'is'} all settled`;body='Nothing to pay or collect.'}
+  }else{
+    if(u.net<0){const L=P.direct.filter(t=>t.from===u.key);head=`${isPayer?(you?'You owe ':esc(m.name)+' owes '):payerName+' owes '}${money(u.net)}`;
+      body=`${L.length} payment${L.length===1?'':'s'}: ${breakdownFor(u.key,P)}. Or pick a treasurer to pay just once.`;acts=`<button class="btn sm" data-act="tab" data-id="settle">See how to pay</button>`;}
+    else if(u.net>0){head=`${subj} ${you&&!u.fam?'get':'gets'} back ${money(u.net)}`;body='People who owe will pay this when you settle up.';acts=`<button class="btn sm ghost" data-act="tab" data-id="settle">Settle up</button>`;}
+    else{head=`${subj} ${you&&!u.fam?'are':'is'} all settled`;body='Nothing to pay or collect.'}
+  }
+  return `<div class="next"><span class="lbl">Next step</span><div class="next-h">${head}</div><p>${body}</p>${acts?`<div class="next-a">${acts}</div>`:''}</div>`;
+}
+
 function vSettle(){
   const M=live(S.members);if(!M.length)return noMembers();
-  const st=stats();const U=unitNets(st);const map={},byKey={};U.forEach(u=>{map[u.key]=u.net;byKey[u.key]=u});
-  const hasFam=live(S.families).length>0;
-  if(S.collector&&!M.some(m=>m.id===S.collector))S.collector=null;
-  const colKey=unitKeyOf(S.collector||S.me||U[0].payer);const colU=byKey[colKey]||U[0];
-  const owing=U.filter(u=>u.net<0),owed=U.filter(u=>u.net>0);
-  const totalDue=owing.reduce((s,u)=>s-u.net,0);
+  const P=settlePlan();const owing=P.U.filter(u=>u.net<0),owed=P.U.filter(u=>u.net>0);const due=owing.reduce((s,u)=>s-u.net,0);
+  const mode=S.settle==='direct'?'direct':'treasurer';
   let plan='';
-  if(S.settle==='direct'){
-    const p=planDirect(map);
-    plan=`<p class="note">The fewest payments that clear every balance. A payer may need to pay more than one receiver.</p>`+(p.length?payGroups(p,byKey):settled());
+  if(mode==='treasurer'){
+    if(!P.T){plan=`<div class="next"><span class="lbl">Step 0</span><div class="next-h">Pick a treasurer</div><p>Everyone who owes pays the treasurer once. The treasurer then pays back the people who spent. Everyone sees the same treasurer.</p>
+      <div class="chips" style="margin-top:12px">${P.U.map(u=>`<button class="chip" data-act="setTreasurer" data-id="${u.payer}">${esc(mName(u.payer))}${u.fam?' '+ic('house'):''}</button>`).join('')}</div></div>`;}
+    else{const tp=P.tp;const T=P.T;
+      const inTotal=tp.collected+tp.inLeft,outTotal=tp.paidOut+tp.outLeft;
+      plan=`<div class="tcard">${av(T)}<div style="flex:1;min-width:0"><span class="lbl">Treasurer</span><div class="next-h" style="margin:2px 0">${esc(nameOrYou(T))}${famOf(T)?' · '+esc(famOf(T).name):''}</div>${upiLine(T)}</div><button class="link" data-act="pickTreasurer">Change</button></div>
+      <div class="step"><div class="step-h"><span class="num-badge">1</span><div style="flex:1"><b>Collect</b><div class="hint num">${money(tp.collected)} of ${money(inTotal)} collected</div></div></div>${bar(tp.collected,inTotal)}
+      ${tp.ins.length?tp.ins.map(t=>{const u=P.byKey[t.from];const bd=breakdownFor(t.from,P);return `<div class="prow">${av(u.payer)}<div style="min-width:0;flex:1"><div class="t">${u.payer===S.me?'You pay':esc(mName(u.payer))+' pays'} <span class="num">${money(t.amount)}</span></div>
+        <div class="s">${u.fam?esc(u.name)+' · ':''}${bd?'covers '+bd:''}</div></div>${payBtn(u.payer,T,t.amount,'collect','Paid')}</div>`}).join(''):'<p class="note" style="margin:12px 0 0">Everyone has paid in.</p>'}</div>
+      <div class="step"><div class="step-h"><span class="num-badge">2</span><div style="flex:1"><b>Pay out</b><div class="hint num">${money(tp.paidOut)} of ${money(outTotal)} paid out</div></div></div>${bar(tp.paidOut,outTotal)}
+      ${tp.outs.length?tp.outs.map(t=>{const u=P.byKey[t.to];return `<div class="prow">${av(u.payer)}<div style="min-width:0;flex:1"><div class="t">To ${esc(nameOrYou(u.payer))} <span class="num">${money(t.amount)}</span></div>
+        <div class="s">${u.fam?esc(u.name)+' · ':''}spent more than their share</div>${upiLine(u.payer)}</div>${payBtn(T,u.payer,t.amount,'payout','Paid')}</div>`}).join(''):'<p class="note" style="margin:12px 0 0">Nobody is waiting for money.</p>'}
+      ${tp.own<0?`<p class="hint" style="margin-top:10px">Payouts include the treasurer's own share of ${money(tp.own)}.</p>`:''}</div>`;}
   }else{
-    const p=planCollector(map,colU.key);
-    plan=`<p class="note">One receiver collects from everyone who owes, then pays everyone who is owed.</p>
-      <div class="fh" style="margin-bottom:10px"><span class="lbl">Receiver</span></div>
-      <div class="chips scroll" style="margin-bottom:6px">${U.map(u=>`<button class="chip${colU.key===u.key?' on':''}" data-act="collector" data-id="${u.payer}">${esc(mName(u.payer))}${u.fam?' · family':''}</button>`).join('')}</div>`+
-      (p.ins.length||p.outs.length?
-        `<div class="day" style="margin-top:14px"><span class="lbl" style="color:var(--text)">Step 1 · Everyone pays ${esc(mName(colU.payer))}</span><span class="lbl num">${money(p.ins.reduce((s,x)=>s+x.amount,0))}</span></div>${p.ins.length?p.ins.map(t=>payLine(t,byKey,true)).join(''):'<p class="note" style="margin-top:12px">Nobody needs to pay in.</p>'}
-         <div class="day" style="margin-top:12px"><span class="lbl" style="color:var(--text)">Step 2 · ${esc(mName(colU.payer))} pays out</span><span class="lbl num">${money(p.outs.reduce((s,x)=>s+x.amount,0))}</span></div>${p.outs.length?p.outs.map(t=>payLine(t,byKey,true)).join(''):'<p class="note" style="margin-top:12px">Nobody needs paying out.</p>'}`:settled());
+    plan=`<p class="note">Each payer sends money straight to the people who spent. Fewest possible transfers.</p>`+(P.direct.length?payGroups(P.direct,P.byKey):settled());
   }
-  const summary=`<div class="kv" style="border-top:0"><span>${owing.length} ${owing.length===1?'payer':'payers'} · ${owed.length} ${owed.length===1?'receiver':'receivers'}</span><span class="num" style="font-weight:700">${money(totalDue)} to settle</span></div>
-    ${hasFam?'<p class="hint" style="margin-bottom:6px">Families settle as one. The master pays or receives for everyone in the family.</p>':''}`;
   const hist=live(S.settlements).sort(byNew);
-  return `<div class="grid two"><div class="col"><div class="page-h"><span class="lbl">Full &amp; final settlement</span><h1>Clear the balances</h1></div>
-  <section style="padding-top:12px">${summary}<div class="seg" role="tablist" style="margin-top:12px"><button class="${S.settle==='direct'?'on':''}" data-act="settleMode" data-id="direct">Fewest payments</button><button class="${S.settle==='collector'?'on':''}" data-act="settleMode" data-id="collector">One receiver</button></div>
-  <div style="margin-top:20px">${plan}</div>
-  <div style="margin-top:18px"><button class="btn ghost" data-act="recordPay">Record a payment</button></div></section></div>
-  <div class="col"><section><div class="sec-h"><h2>Payments made</h2></div>
-  ${hist.length?`<div class="rows">${hist.map(s=>`<div class="row">${av(s.from)}<div style="min-width:0"><div class="t">${esc(nameOrYou(s.from))} → ${esc(nameOrYou(s.to))}</div><div class="s">${esc(dayLabel(s.date))}${s.note?' · '+esc(s.note):''}</div></div>
-    <div class="r num">${money(s.amount)}<small><button class="link" data-confirm="1" data-act="undoPay" data-id="${s.id}">Undo</button></small></div></div>`).join('')}</div>`:'<p class="note">Payments you mark as paid show here.</p>'}</section></div></div>`;
+  const kindLabel={collect:'to treasurer',payout:'treasurer payout',direct:'direct'};
+  return `<div class="grid two"><div class="col"><div class="page-h"><span class="lbl">Settle up</span><h1>Who pays whom</h1>
+    <p class="lead">Clear every balance in a few payments. Families pay and receive as one, through their master.</p></div>
+  <section style="padding-top:14px"><div class="stats3"><div><span class="lbl">To settle</span><b class="num">${money(due)}</b></div><div><span class="lbl">Payers</span><b>${owing.length}</b></div><div><span class="lbl">Receivers</span><b>${owed.length}</b></div></div>
+  <div class="seg" role="tablist" style="margin-top:16px"><button class="${mode==='treasurer'?'on':''}" data-act="settleMode" data-id="treasurer">Via treasurer</button><button class="${mode==='direct'?'on':''}" data-act="settleMode" data-id="direct">Pay directly</button></div>
+  <div style="margin-top:18px">${due?plan:settled()}</div>
+  <div style="margin-top:18px"><button class="btn ghost" data-act="recordPay">Record another payment</button></div></section></div>
+  <div class="col"><section><div class="sec-h"><h2>Payments made</h2>${hist.length?`<span class="lbl num">${money(sumAmt(hist))}</span>`:''}</div>
+  ${hist.length?`<div class="rows">${hist.map(s=>`<div class="row">${av(s.from)}<div style="min-width:0"><div class="t">${esc(nameOrYou(s.from))} → ${esc(nameOrYou(s.to))}</div><div class="s">${esc(dayLabel(s.date))}${s.kind&&kindLabel[s.kind]?' · '+kindLabel[s.kind]:''}${s.note?' · '+esc(s.note):''}</div></div>
+    <div class="r num">${money(s.amount)}<small><button class="link" data-confirm="1" data-act="undoPay" data-id="${s.id}">Undo</button></small></div></div>`).join('')}</div>`:'<p class="note">Payments appear here once marked as paid.</p>'}</section></div></div>`;
 }
+function treasurerSheet(){
+  const P=settlePlan();
+  openSheet('Choose treasurer',`<p class="note">The treasurer collects from everyone who owes, then pays back those who spent. Pick someone who's happy to handle the money.</p>
+    <div class="chips">${P.U.map(u=>`<button class="chip${P.T===u.payer?' on':''}" data-act="setTreasurer" data-id="${u.payer}">${esc(mName(u.payer))}${u.fam?' '+ic('house'):''}</button>`).join('')}</div>
+    ${P.T?`<div class="foot"><button class="btn ghost" data-confirm="1" data-act="clearTreasurer">Stop using a treasurer</button></div>`:''}`);
+}
+
 const settled=()=>`<div class="empty" style="padding:16px 0"><h3>Everyone is settled</h3><p>No one owes anything right now.</p></div>`;
 
 /* ======================= sheets ======================= */
@@ -588,17 +673,17 @@ async function saveExpense(){
     closeSheet();toast(edit?'Expense updated':(fam?fam.name+' share deducted · expense added':'Expense added'))}
 }
 function vTeam(){
-  const st=stats();const M=live(S.members).slice().sort((a,b)=>a.name.localeCompare(b.name));
-  const U=unitNets(st);const F=U.filter(u=>u.fam);
-  const fams=F.length?`<div class="rows">${F.map(u=>`<button class="row" data-act="family" data-id="${u.fam.id}">${av(u.payer)}<div style="min-width:0"><div class="t">${esc(u.name)}</div>
-      <div class="s">${u.ids.map(id=>esc(mName(id))+' – '+esc(u.fam.members[id]||'')+(id===u.payer?' (Master)':'')).join(' · ')}</div></div><div class="r num">${pill(u.net)}</div></button>`).join('')}</div>`
-    :`<p class="note">Group a couple and their kids into a family. The master's payments cover the family's share, and the master settles once for everyone.</p>`;
-  const sub=m=>{const f=famOf(m.id);const r=f?`${esc(f.members[m.id]||'Member')} · ${esc(f.name)}${f.masterId===m.id?' · Master':''}`:'';return [r,m.upi?'UPI '+esc(m.upi):''].filter(Boolean).join(' · ')||'No UPI ID yet'};
-  return `<div class="page-h"><span class="lbl">Team</span><h1>${M.length} ${M.length===1?'person':'people'}</h1></div>
-  <section style="padding-top:12px"><div class="sec-h"><h2>Families</h2>${F.length?`<span class="lbl">${F.length}</span>`:''}</div>${fams}
-  <div style="margin-top:14px;max-width:420px"><button class="btn ghost" data-act="newFamily">Create a family</button></div></section>
-  <section><div class="sec-h"><h2>People</h2></div>${M.length?`<div class="rows">${M.map(m=>`<button class="row" data-act="person" data-id="${m.id}">${av(m.id)}<div style="min-width:0"><div class="t">${esc(m.name)}${m.id===S.me?' · you':''}</div><div class="s">${sub(m)}</div></div><div class="r num">${famOf(m.id)?'<span class="pill zero">in family</span>':pill(st.net[m.id]||0)}</div></button>`).join('')}</div>`:''}
-  <div style="margin-top:18px;max-width:420px"><button class="btn" data-act="addMember">Add a person</button></div></section>`;
+  const st=stats();const U=unitNets(st);const F=U.filter(u=>u.fam).sort((a,b)=>a.name.localeCompare(b.name));const Sg=U.filter(u=>!u.fam).sort((a,b)=>a.name.localeCompare(b.name));
+  const M=live(S.members);
+  const famCards=F.map(u=>`<div class="fcard"><button class="fcard-h" data-act="family" data-id="${u.fam.id}"><span class="fic">${ic('house')}</span><div style="flex:1;min-width:0"><div class="t">${esc(u.name)}</div><div class="s">${u.ids.length} people · master ${esc(mName(u.payer))}</div></div>${pill(u.net)}</button>
+    ${u.ids.map(id=>`<button class="mrow" data-act="person" data-id="${id}">${avs(id)}<span class="mname">${esc(mName(id))}${id===S.me?' <span class="hint">(you)</span>':''}</span>${crown(id)}${relTag(id)}</button>`).join('')}</div>`).join('');
+  return `<div class="page-h"><span class="lbl">Team</span><h1>People &amp; families</h1><p class="lead">Families pay and receive as one, through their master. Singles settle for themselves.</p></div>
+  <section style="padding-top:14px"><div class="stats3"><div><span class="lbl">People</span><b>${M.length}</b></div><div><span class="lbl">Families</span><b>${F.length}</b></div><div><span class="lbl">Singles</span><b>${Sg.length}</b></div></div></section>
+  <section><div class="sec-h"><h2>Families</h2><button class="link" data-act="newFamily">+ Create</button></div>
+    ${F.length?`<div class="fgrid">${famCards}</div>`:`<p class="note">Group a couple and their kids into a family. The master's payments cover the family's share, and the master settles once for everyone.</p><button class="btn ghost" data-act="newFamily" style="max-width:340px">Create a family</button>`}</section>
+  <section><div class="sec-h"><h2>Singles</h2><button class="link" data-act="addMember">+ Add person</button></div>
+    ${Sg.length?`<div class="rows">${Sg.map(u=>`<button class="row" data-act="person" data-id="${u.payer}">${av(u.payer)}<div style="min-width:0"><div class="t">${esc(u.name)}${u.payer===S.me?' · you':''}</div><div class="s">${mById(u.payer)&&mById(u.payer).upi?'UPI '+esc(mById(u.payer).upi):'Settles on their own'}</div></div><div class="r num">${pill(u.net)}</div></button>`).join('')}</div>`:'<p class="note">Everyone is in a family.</p>'}
+    <div style="margin-top:16px;max-width:420px"><button class="btn" data-act="addMember">Add a person</button></div></section>`;
 }
 
 /* ---------- family sheets ---------- */
@@ -678,14 +763,17 @@ function expenseDetail(id){
     <div class="foot"><button class="btn" data-act="editExpense" data-id="${e.id}">Edit</button><button class="btn ghost" data-confirm="1" data-act="delExpense" data-id="${e.id}">Delete expense</button></div>`);
 }
 function personSheet(id){
-  const m=mById(id);if(!m)return;const st=stats();const v=st.net[id]||0;
+  const m=mById(id);if(!m)return;const P=settlePlan();const st=P.st;const f=famOf(id);
   const ex=live(S.expenses).filter(e=>e.paidBy===id||(e.shares&&e.shares[id])).sort(byNew);
-  const pf=famOf(id);
-  openSheet(m.name,`${pf?`<p class="note" style="margin-bottom:12px">${esc(pf.members[id]||'Member')} in <b style="color:var(--text)">${esc(pf.name)}</b>${pf.masterId===id?' · Master':' · settled by '+esc(mName(pf.masterId))}</p>`:''}<div style="display:flex;gap:14px;align-items:center">${av(id)}<div>${pill(v)}<div class="hint" style="margin-top:4px">Paid ${money(st.paid[id])} · Share ${money(st.share[id])}</div></div></div>
-    ${m.upi?`<div class="upi" style="margin-top:14px">UPI <code>${esc(m.upi)}</code><button class="link" data-act="copy" data-id="${esc(m.upi)}">Copy</button></div>`:''}
-    <div class="fh" style="margin-top:22px"><span class="lbl">${ex.length} expense${ex.length===1?'':'s'}</span></div>
-    <div class="rows">${ex.slice(0,30).map(e=>`<div class="kv"><span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(e.title)}<br><small class="hint">${e.paidBy===id?'Paid '+money(e.amount):'Paid by '+esc(mName(e.paidBy))}</small></span><span class="num" style="font-weight:600">${e.shares&&e.shares[id]?money(e.shares[id]):'—'}</span></div>`).join('')}</div>
-    <div class="foot">${famOf(id)?`<button class="btn ghost" data-act="family" data-id="${famOf(id).id}">View ${esc(famOf(id).name)}</button>`:''}${id!==S.me?`<button class="btn" data-act="setMe" data-id="${id}">This is me</button>`:''}<button class="btn ghost" data-act="editMember" data-id="${id}">Edit name or UPI</button></div>`);
+  openSheet(m.name,`<div style="display:flex;gap:14px;align-items:center">${av(id)}<div style="min-width:0">
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">${f?famChip(id)+relTag(id)+crown(id):'<span class="tag">Single</span>'}</div>
+      <div class="hint num" style="margin-top:6px">Paid ${money(st.paid[id])} · Own share ${money(st.share[id])}</div></div></div>
+    ${f?`<p class="hint" style="margin-top:12px">Part of <b style="color:var(--text)">${esc(f.name)}</b>. ${f.masterId===id?'As master, settles for the whole family.':'Settled through '+esc(mName(f.masterId))+', the master.'}</p>`:''}
+    ${nextStep(id,P)}
+    ${m.upi?`<div style="margin-top:14px">${upiLine(id)}</div>`:''}
+    <div class="fh" style="margin-top:22px"><span class="lbl">${ex.length} expense${ex.length===1?'':'s'} involving ${esc(m.name)}</span></div>
+    <div class="rows">${ex.slice(0,30).map(e=>`<button class="kv" data-act="openExpense" data-id="${e.id}" style="width:100%;text-align:left"><span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(e.title)}<br><small class="hint">${e.paidBy===id?'Paid '+money(e.amount):'Paid by '+esc(mName(e.paidBy))}</small></span><span class="num" style="font-weight:600;text-align:right">${e.shares&&e.shares[id]?money(e.shares[id]):'—'}<br><small class="hint">share</small></span></button>`).join('')||'<p class="note">No expenses yet.</p>'}</div>
+    <div class="foot">${f?`<button class="btn ghost" data-act="family" data-id="${f.id}">View ${esc(f.name)}</button>`:''}${id!==S.me?`<button class="btn" data-act="setMe" data-id="${id}">This is me</button>`:''}<button class="btn ghost" data-act="editMember" data-id="${id}">Edit name or UPI</button></div>`);
 }
 function memberSheet(id){
   const m=id?mById(id):null;
@@ -852,6 +940,9 @@ document.addEventListener('click',async e=>{
     case 'famSave':saveFamily();break;
     case 'famDelete':{const f=S.families.find(x=>x.id===FM.id);if(f&&await trash('families',f.id)){log('family-remove',`Removed ${f.name}. Members now settle on their own.`,{fam:f.id});closeSheet();toast('Family removed')}break}
     case 'activity':closeSheet();activitySheet();break;
+    case 'pickTreasurer':treasurerSheet();break;
+    case 'setTreasurer':{if(S.readOnly){toast('View only');break}try{await S.backend.putMeta(Object.assign({},S.meta,{treasurer:id,treasurerSince:Date.now()}));log('treasurer',`${mName(id)} is now the treasurer.`);closeSheet();toast(mName(id)+' is the treasurer')}catch(err){fail(err)}break}
+    case 'clearTreasurer':{try{const m2=Object.assign({},S.meta);delete m2.treasurer;delete m2.treasurerSince;await S.backend.putMeta(Object.assign(m2,{treasurer:''}));log('treasurer','Stopped using a treasurer.');closeSheet();toast('Treasurer removed')}catch(err){fail(err)}break}
     case 'addMember':closeSheet();memberSheet();break;
     case 'editMember':closeSheet();memberSheet(id);break;
     case 'saveMember':saveMember(id||null,!!el.dataset.more);break;
@@ -872,11 +963,10 @@ document.addEventListener('click',async e=>{
     case 'fm':S.fm=id;render();break;
     case 'fc':S.fc=id;render();break;
     case 'settleMode':S.settle=id;ls.set('settle',id);render();break;
-    case 'collector':S.collector=id;ls.set('collector',id);render();break;
-    case 'markPaid':{const [f,t,a]=id.split('|');
-      const ff=famOf(f),tf=famOf(t);const note=[ff?'For '+ff.name:'',S.settle==='collector'?'Via receiver':''].filter(Boolean).join(' · ');const sid=newId();
-      if(await put('settlements',sid,{from:f,to:t,amount:+a,date:today(),note,createdAt:Date.now(),addedBy:S.me||''})){
-        log('payment',`${mName(f)}${ff?' (for '+ff.name+')':''} paid ${mName(t)}${tf?' (for '+tf.name+')':''} ${money(+a)}. Marked as full and final for this pair.`,{ref:sid,fam:ff?ff.id:(tf?tf.id:''),amount:+a});
+    case 'markPaid':{const [f,t,a,kind]=id.split('|');
+      const ff=famOf(f),tf=famOf(t);const note=ff?'For '+ff.name:'';const sid=newId();
+      if(await put('settlements',sid,{from:f,to:t,amount:+a,date:today(),note,kind:kind||'direct',createdAt:Date.now(),addedBy:S.me||''})){
+        log('payment',`${mName(f)}${ff?' (for '+ff.name+')':''} paid ${mName(t)}${tf?' (for '+tf.name+')':''} ${money(+a)}${kind==='collect'?' to the treasurer':kind==='payout'?' as treasurer payout':''}.`,{ref:sid,fam:ff?ff.id:(tf?tf.id:''),amount:+a});
         toast(mName(f)+' paid '+mName(t)+' '+money(+a))}break}
     case 'undoPay':{const s0=S.settlements.find(z=>z.id===id);if(await trash('settlements',id)){log('payment-undo',`Undid payment ${mName(s0&&s0.from)} → ${mName(s0&&s0.to)} ${money(s0&&s0.amount)}.`,{ref:id});toast('Payment removed')}break}
     case 'recordPay':if(live(S.members).length<2){toast('Add at least two people first');break}recordSheet();break;
