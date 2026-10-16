@@ -72,7 +72,9 @@ h1,h2,h3{text-wrap:balance}
 .banner p{margin:0;flex:1;min-width:200px}
 
 main{padding-top:6px}
-.grid{display:grid;gap:0 40px}
+.grid{display:grid;gap:0 40px;grid-template-columns:minmax(0,1fr)}
+.col{min-width:0}
+main{overflow-x:clip}
 @media (min-width:900px){.grid.two{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}.grid.two>.col:last-child{padding-top:20px}}
 section{padding-block:24px;border-bottom:1px solid var(--line)}
 .col>section:last-child,main>section:last-child{border-bottom:0}
