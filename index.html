@@ -27,7 +27,7 @@
 /* Layout: phone-first app shell. Sticky app bar, one readable column (two on wide screens), black hero card, bottom tab bar with a centre Add button. */
 :root{
   --paper:#F6F5F1; --card:#FFFFFF; --ink:#111111; --text:#18181A; --mute:#57554F; --line:#E0DDD5; --soft:#EEECE6;
-  --accent:#9C7A4E; --get:#17684F; --get-bg:#E1F0E9; --owe:#A2302A; --owe-bg:#F8E3E0; --on-ink:#F6F5F1; --on-ink-mute:#B9B6AE; --scrim:rgba(17,17,17,.42);
+  --accent:#9C7A4E; --get:#17684F; --get-bg:#E1F0E9; --owe:#A2302A; --owe-bg:#F8E3E0; --due:#8A5300; --due-bg:#FBEBCF; --on-ink:#F6F5F1; --on-ink-mute:#B9B6AE; --scrim:rgba(17,17,17,.42);
   --display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
   --body:"DM Sans","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --gut-l:max(16px, env(safe-area-inset-left, 0px));
@@ -36,10 +36,10 @@
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --paper:#0E0E0D; --card:#191917; --ink:#F1EFEA; --text:#EEECE6; --mute:#B4B0A7; --line:#2F2E2B; --soft:#242320;
-  --accent:#D1B184; --get:#7FCDAC; --get-bg:#15302A; --owe:#F39484; --owe-bg:#3A1D19; --on-ink:#111110; --on-ink-mute:#55534E; --scrim:rgba(0,0,0,.62); color-scheme:dark}}
+  --accent:#D1B184; --get:#7FCDAC; --get-bg:#15302A; --owe:#F39484; --owe-bg:#3A1D19; --due:#F2BC6B; --due-bg:#3A2B12; --on-ink:#111110; --on-ink-mute:#55534E; --scrim:rgba(0,0,0,.62); color-scheme:dark}}
 :root[data-theme="dark"]{
   --paper:#0E0E0D; --card:#191917; --ink:#F1EFEA; --text:#EEECE6; --mute:#B4B0A7; --line:#2F2E2B; --soft:#242320;
-  --accent:#D1B184; --get:#7FCDAC; --get-bg:#15302A; --owe:#F39484; --owe-bg:#3A1D19; --on-ink:#111110; --on-ink-mute:#55534E; --scrim:rgba(0,0,0,.62); color-scheme:dark}
+  --accent:#D1B184; --get:#7FCDAC; --get-bg:#15302A; --owe:#F39484; --owe-bg:#3A1D19; --due:#F2BC6B; --due-bg:#3A2B12; --on-ink:#111110; --on-ink-mute:#55534E; --scrim:rgba(0,0,0,.62); color-scheme:dark}
 
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -198,6 +198,13 @@ button.row:hover{background:linear-gradient(90deg,transparent,var(--soft) 30%,va
 .prog{height:6px;background:var(--soft);margin-bottom:6px}.prog i{display:block;height:100%;background:var(--get)}
 .prow{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
 .prow .t{font-size:15.5px;font-weight:700}.prow .s{font-size:13.5px;color:var(--mute)}.prow .upi{margin-top:4px}
+.st{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;vertical-align:2px;white-space:nowrap}
+.st.due{background:var(--due-bg);color:var(--due)}
+.st.done{background:var(--get-bg);color:var(--get)}
+.btn.paybtn{background:transparent;color:var(--text);border:1.5px solid var(--text);text-transform:none;letter-spacing:0;font-size:14px}
+.btn.paybtn.armed{background:var(--get);border-color:var(--get);color:var(--paper)}
+.done-row .t{font-weight:600;color:var(--mute)}
+.tag.fixed{border-color:var(--accent);color:var(--accent)}
 /* bottom bar */
 .nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--card);border-top:1px solid var(--line);
   padding-left:var(--gut-l);padding-right:var(--gut-r);padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -6px 24px rgba(0,0,0,.05)}
@@ -498,9 +505,9 @@ function payLine(t,byKey,showFrom){
   const fu=byKey[t.from],tu=byKey[t.to];const to=mById(tu.payer);
   const who=showFrom?`${avs(fu.payer)}<span>${esc(nameOrYou(fu.payer))}</span>${ic('arrow')}`:'';
   return `<div class="xfer"><div class="who2">${who}${avs(tu.payer)}<span>${showFrom?'':'to '}${esc(nameOrYou(tu.payer))}${tu.fam?` <span class="hint" style="font-weight:500">(${esc(tu.name)})</span>`:''}</span></div>
-    <div class="amt2 num">${money(t.amount)}</div>
+    <div class="amt2 num">${money(t.amount)}<div>${stDue}</div></div>
     <div class="foot2">${to&&to.upi?`<div class="upi">UPI <code>${esc(to.upi)}</code><button class="link" data-act="copy" data-id="${esc(to.upi)}">Copy</button></div>`:'<span class="hint">No UPI ID saved</span>'}
-    <button class="btn sm" data-confirm="1" data-act="markPaid" data-id="${fu.payer}|${tu.payer}|${t.amount}|direct">Mark paid</button></div></div>`;
+    <button class="btn sm paybtn" data-confirm="1" data-act="markPaid" data-id="${fu.payer}|${tu.payer}|${t.amount}|direct">Mark as paid</button></div></div>`;
 }
 function payGroups(list,byKey){
   const g={};list.forEach(t=>{(g[t.from]=g[t.from]||[]).push(t)});
@@ -529,7 +536,10 @@ const crown=id=>isMaster(id)?`<span class="crown" title="Master">${ic('crown')}<
 const bar=(done,total)=>{const p=total?Math.min(100,Math.round(done/total*100)):100;return `<div class="prog" role="progressbar" aria-valuenow="${p}" aria-valuemin="0" aria-valuemax="100"><i style="width:${p}%"></i></div>`};
 function breakdownFor(key,P){const L=P.direct.filter(t=>t.from===key);return L.map(t=>`${esc(P.byKey[t.to].fam?P.byKey[t.to].name:mName(P.byKey[t.to].payer))} ${money(t.amount)}`).join(' · ')}
 function upiLine(id){const m=mById(id);return m&&m.upi?`<div class="upi">UPI <code>${esc(m.upi)}</code><button class="link" data-act="copy" data-id="${esc(m.upi)}">Copy</button></div>`:`<span class="hint">No UPI ID saved for ${esc(mName(id))}</span>`}
-const payBtn=(from,to,amt,kind,label)=>`<button class="btn sm" data-confirm="1" data-act="markPaid" data-id="${from}|${to}|${amt}|${kind}">${label||'Mark paid'}</button>`;
+const payBtn=(from,to,amt,kind,label)=>`<button class="btn sm paybtn" data-confirm="1" data-act="markPaid" data-id="${from}|${to}|${amt}|${kind}">${label||'Mark as paid'}</button>`;
+const stDue=`<span class="st due">To pay</span>`;
+const stDone=`<span class="st done">${'\u2713'} Paid</span>`;
+function doneRows(list,dir){return list.map(s=>`<div class="prow done-row">${av(dir==='in'?s.from:s.to)}<div style="min-width:0;flex:1"><div class="t">${dir==='in'?esc(nameOrYou(s.from))+' paid':'Paid '+esc(nameOrYou(s.to))} <span class="num">${money(s.amount)}</span></div><div class="s">${esc(dayLabel(s.date))}</div></div>${stDone}</div>`).join('')}
 
 /* What should this person do next? Used on Home and on a person's page. */
 function nextStep(pid,P){
@@ -568,11 +578,13 @@ function vSettle(){
       const inTotal=tp.collected+tp.inLeft,outTotal=tp.paidOut+tp.outLeft;
       plan=`<div class="tcard">${av(T)}<div style="flex:1;min-width:0"><span class="lbl">Treasurer</span><div class="next-h" style="margin:2px 0">${esc(nameOrYou(T))}${famOf(T)?' · '+esc(famOf(T).name):''}</div>${upiLine(T)}</div><button class="link" data-act="pickTreasurer">Change</button></div>
       <div class="step"><div class="step-h"><span class="num-badge">1</span><div style="flex:1"><b>Collect</b><div class="hint num">${money(tp.collected)} of ${money(inTotal)} collected</div></div></div>${bar(tp.collected,inTotal)}
-      ${tp.ins.length?tp.ins.map(t=>{const u=P.byKey[t.from];const bd=breakdownFor(t.from,P);return `<div class="prow">${av(u.payer)}<div style="min-width:0;flex:1"><div class="t">${u.payer===S.me?'You pay':esc(mName(u.payer))+' pays'} <span class="num">${money(t.amount)}</span></div>
-        <div class="s">${u.fam?esc(u.name)+' · ':''}${bd?'covers '+bd:''}</div></div>${payBtn(u.payer,T,t.amount,'collect','Paid')}</div>`}).join(''):'<p class="note" style="margin:12px 0 0">Everyone has paid in.</p>'}</div>
+      ${tp.ins.length?tp.ins.map(t=>{const u=P.byKey[t.from];const bd=breakdownFor(t.from,P);return `<div class="prow">${av(u.payer)}<div style="min-width:0;flex:1"><div class="t">${u.payer===S.me?'You pay':esc(mName(u.payer))+' pays'} <span class="num">${money(t.amount)}</span> ${stDue}</div>
+        <div class="s">${u.fam?esc(u.name)+' · ':''}${bd?'covers '+bd:''}</div></div>${payBtn(u.payer,T,t.amount,'collect')}</div>`}).join(''):'<p class="note" style="margin:12px 0 0">Everyone has paid in.</p>'}
+      ${doneRows(live(S.settlements).filter(s=>s.kind==='collect'&&s.to===T&&(s.createdAt||0)>=((S.meta&&S.meta.treasurerSince)||0)).sort(byNew),'in')}</div>
       <div class="step"><div class="step-h"><span class="num-badge">2</span><div style="flex:1"><b>Pay out</b><div class="hint num">${money(tp.paidOut)} of ${money(outTotal)} paid out</div></div></div>${bar(tp.paidOut,outTotal)}
-      ${tp.outs.length?tp.outs.map(t=>{const u=P.byKey[t.to];return `<div class="prow">${av(u.payer)}<div style="min-width:0;flex:1"><div class="t">To ${esc(nameOrYou(u.payer))} <span class="num">${money(t.amount)}</span></div>
-        <div class="s">${u.fam?esc(u.name)+' · ':''}spent more than their share</div>${upiLine(u.payer)}</div>${payBtn(T,u.payer,t.amount,'payout','Paid')}</div>`}).join(''):'<p class="note" style="margin:12px 0 0">Nobody is waiting for money.</p>'}
+      ${tp.outs.length?tp.outs.map(t=>{const u=P.byKey[t.to];return `<div class="prow">${av(u.payer)}<div style="min-width:0;flex:1"><div class="t">To ${esc(nameOrYou(u.payer))} <span class="num">${money(t.amount)}</span> ${stDue}</div>
+        <div class="s">${u.fam?esc(u.name)+' · ':''}spent more than their share</div>${upiLine(u.payer)}</div>${payBtn(T,u.payer,t.amount,'payout')}</div>`}).join(''):'<p class="note" style="margin:12px 0 0">Nobody is waiting for money.</p>'}
+      ${doneRows(live(S.settlements).filter(s=>s.kind==='payout'&&s.from===T&&(s.createdAt||0)>=((S.meta&&S.meta.treasurerSince)||0)).sort(byNew),'out')}
       ${tp.own<0?`<p class="hint" style="margin-top:10px">Payouts include the treasurer's own share of ${money(tp.own)}.</p>`:''}</div>`;}
   }else{
     plan=`<p class="note">Each payer sends money straight to the people who spent. Fewest possible transfers.</p>`+(P.direct.length?payGroups(P.direct,P.byKey):settled());
@@ -609,22 +621,43 @@ let F=null,R=null;
 function expenseSheet(e){
   const M=live(S.members);if(!M.length){toast('Add people first');go('team');return}
   const ids=M.map(m=>m.id);
-  F=e?{id:e.id,amount:(e.amount/100).toString(),title:e.title,paidBy:e.paidBy,who:Object.keys(e.shares||{}),split:e.split||'equal',
-      exact:Object.fromEntries(Object.entries(e.shares||{}).map(([k,v])=>[k,(v/100).toString()])),cat:e.category||'Other',date:e.date||today(),note:e.note||'',createdAt:e.createdAt,addedBy:e.addedBy}
-    :{id:null,amount:'',title:'',paidBy:mById(S.me)?S.me:ids[0],who:ids.slice(),split:'equal',exact:{},cat:'Food',date:today(),note:''};
+  F=e?{id:e.id,amount:(e.amount/100).toString(),title:e.title,paidBy:e.paidBy,who:Object.keys(e.shares||{}),split:e.split==='equal'||!e.split?'equal':'custom',
+      fixed:e.split==='custom'?Object.fromEntries(Object.entries(e.fixed||{}).map(([k,v])=>[k,(v/100).toString()])):e.split==='exact'?Object.fromEntries(Object.entries(e.shares||{}).map(([k,v])=>[k,(v/100).toString()])):{},cat:e.category||'Other',date:e.date||today(),note:e.note||'',createdAt:e.createdAt,addedBy:e.addedBy}
+    :{id:null,amount:'',title:'',paidBy:mById(S.me)?S.me:ids[0],who:ids.slice(),split:'equal',fixed:{},cat:'Food',date:today(),note:''};
   openSheet(e?'Edit expense':'New expense','',drawForm);
   if(!e){const a=$('#fAmt');if(a&&window.innerWidth>700)a.focus()}
 }
 function previewText(){
   const total=toPaise(F.amount);const n=F.who.length;
   if(F.split==='equal')return n&&total?`${money(Math.floor(total/n))}${total%n?' to '+money(Math.ceil(total/n)):''} each · ${n} ${n===1?'person':'people'}`:(n?'Enter an amount':'Pick at least one person');
-  const sum=F.who.reduce((s,id)=>s+toPaise(F.exact[id]||0),0);const left=total-sum;
-  return left===0&&total?'Amounts add up':left>0?money(left)+' left to assign':money(left)+' more than the total';
+  return customCalc().msg;
+}
+/* Custom split: amounts you type are fixed; whatever is left is shared evenly by everyone else. */
+function customCalc(){
+  const total=toPaise(F.amount);const fixed={};let fsum=0;
+  F.who.forEach(id=>{const v=F.fixed[id];if(v!=null&&String(v).trim()!==''){const p=toPaise(v);fixed[id]=p;fsum+=p}});
+  const rest=F.who.filter(id=>fixed[id]===undefined);const left=total-fsum;
+  const auto=rest.length&&left>=0?equalShares(left,rest):{};
+  const shares=Object.assign({},fixed,auto);for(const k in shares)if(!shares[k])delete shares[k];
+  let ok=true,msg;const nf=Object.keys(fixed).length;
+  if(!total){ok=false;msg='Enter the total amount first'}
+  else if(!F.who.length){ok=false;msg='Pick at least one person'}
+  else if(left<0){ok=false;msg=`Fixed amounts are ${money(-left)} more than the total`}
+  else if(!rest.length&&left!==0){ok=false;msg=`${money(left)} not assigned. Clear one amount so it can auto-adjust`}
+  else msg=nf?`${nf} fixed · ${money(left)} shared by ${rest.length} ${rest.length===1?'person':'people'}${rest.length?' ('+money(Math.floor(left/rest.length))+(left%rest.length?'+':'')+' each)':''}`:'Type an amount next to anyone who pays a different share';
+  return {total,fixed,rest,left,auto,shares,ok,msg};
+}
+function refreshCustom(){
+  const c=customCalc();
+  F.who.forEach(id=>{const inp=document.querySelector(`[data-fix="${id}"]`);const tg=document.getElementById('ft-'+id);const isF=c.fixed[id]!==undefined;
+    if(inp)inp.placeholder=isF?'':(c.auto[id]!=null?(c.auto[id]/100).toLocaleString('en-IN'):'0');
+    if(tg){tg.textContent=isF?'fixed':'auto';tg.className=isF?'tag fixed':'tag'}});
+  const p=$('#fPrev');if(p){p.textContent=c.msg;p.style.color=c.ok?'var(--text)':'var(--owe)'}
 }
 function formShares(){
   const total=toPaise(F.amount);if(!total||!F.who.length)return null;
   if(F.split==='equal')return equalShares(total,F.who);
-  const o={};F.who.forEach(id=>{const v=toPaise(F.exact[id]||0);if(v)o[id]=v});return o;
+  const c=customCalc();return c.ok?c.shares:null;
 }
 function famPreview(){
   const sh=formShares();if(!sh)return '';
@@ -643,9 +676,9 @@ function drawForm(){
   <div class="field"><div class="fh"><span class="lbl">Split between · ${n} of ${M.length}</span><button class="link" data-act="fAll">${allOn?'Clear all':'Select everyone'}</button></div>
     <div class="chips">${M.map(m=>`<button class="chip${F.who.includes(m.id)?' on':''}" data-act="fWho" data-id="${m.id}" aria-pressed="${F.who.includes(m.id)}">${esc(m.name)}</button>`).join('')}</div>
     <div class="hint">Tap a name to leave them out if this expense isn't theirs.</div></div>
-  <div class="field"><span class="lbl">How to split</span><div class="seg"><button class="${F.split==='equal'?'on':''}" data-act="fSplit" data-id="equal">Equally</button><button class="${F.split==='exact'?'on':''}" data-act="fSplit" data-id="exact">Exact amounts</button></div>
-    ${F.split==='exact'?`<div>${F.who.map(id=>`<div class="split-row"><span>${esc(mName(id))}</span><input class="in num" inputmode="decimal" data-exact="${id}" placeholder="₹0" value="${esc(F.exact[id]||'')}" aria-label="Share for ${esc(mName(id))}"></div>`).join('')}</div>`:''}
-    <div class="hint num" id="fPrev" style="color:var(--text);font-weight:600">${previewText()}</div>
+  <div class="field"><span class="lbl">How to split</span><div class="seg"><button class="${F.split==='equal'?'on':''}" data-act="fSplit" data-id="equal">Equally</button><button class="${F.split==='custom'?'on':''}" data-act="fSplit" data-id="custom">Custom amounts</button></div>
+    ${F.split==='custom'?(()=>{const c=customCalc();return `<p class="hint" style="margin:2px 0 0">Type an amount for anyone paying a different share. Everyone else's share adjusts automatically. Leave a box empty to keep it automatic.</p><div>${F.who.map(id=>{const isF=c.fixed[id]!==undefined;return `<div class="split-row"><span>${esc(mName(id))} <span class="${isF?'tag fixed':'tag'}" id="ft-${id}">${isF?'fixed':'auto'}</span></span><input class="in num" inputmode="decimal" data-fix="${id}" placeholder="${isF?'':(c.auto[id]!=null?(c.auto[id]/100).toLocaleString('en-IN'):'0')}" value="${esc(F.fixed[id]||'')}" aria-label="Share for ${esc(mName(id))}"></div>`}).join('')}</div>`})():''}
+    <div class="hint num" id="fPrev" style="color:${F.split==='custom'&&!customCalc().ok?'var(--owe)':'var(--text)'};font-weight:600">${previewText()}</div>
     <div class="hint num" id="fFam">${famPreview()}</div></div>
   <div class="field"><span class="lbl">Date</span><input class="in" type="date" id="fDate" value="${esc(F.date)}"></div>
   <div class="field"><span class="lbl">Note (optional)</span><input class="in" id="fNote" placeholder="Bill number, place…" value="${esc(F.note)}" maxlength="140"></div>
@@ -655,8 +688,8 @@ function drawForm(){
 function syncForm(t){
   if(!F)return;
   if(t.id==='fAmt')F.amount=t.value;else if(t.id==='fTitle')F.title=t.value;else if(t.id==='fDate')F.date=t.value;else if(t.id==='fNote')F.note=t.value;
-  else if(t.dataset.exact)F.exact[t.dataset.exact]=t.value;else return;
-  if(t.id==='fAmt'||t.dataset.exact){const p=$('#fPrev');if(p)p.textContent=previewText();const fp=$('#fFam');if(fp)fp.innerHTML=famPreview();const b=$('#fSaveBtn');const total=toPaise(F.amount);if(b)b.textContent=(F.id?'Save changes':'Add expense')+(total?' · '+money(total):'')}
+  else if(t.dataset.fix)F.fixed[t.dataset.fix]=t.value;else return;
+  if(t.id==='fAmt'||t.dataset.fix){if(F.split==='custom')refreshCustom();else{const p=$('#fPrev');if(p)p.textContent=previewText()}const fp=$('#fFam');if(fp)fp.innerHTML=famPreview();const b=$('#fSaveBtn');const total=toPaise(F.amount);if(b)b.textContent=(F.id?'Save changes':'Add expense')+(total?' · '+money(total):'')}
 }
 async function saveExpense(){
   const total=toPaise(F.amount);
@@ -664,10 +697,10 @@ async function saveExpense(){
   if(!F.who.length){toast('Pick who this expense is for');return}
   let shares;
   if(F.split==='equal')shares=equalShares(total,F.who);
-  else{shares={};F.who.forEach(id=>{const v=toPaise(F.exact[id]||0);if(v)shares[id]=v});const sum=Object.values(shares).reduce((a,b)=>a+b,0);
-    if(sum!==total){toast('Shares must add up to '+money(total));return}}
+  let fixedP=null;
+  if(F.split==='custom'){const c=customCalc();if(!c.ok){toast(c.msg);return}shares=c.shares;fixedP=c.fixed}
   const id=F.id||newId();const edit=!!F.id;
-  const ok=await put('expenses',id,{title:F.title.trim()||F.cat,amount:total,paidBy:F.paidBy,shares,split:F.split,category:F.cat,date:F.date||today(),note:F.note.trim(),
+  const ok=await put('expenses',id,{title:F.title.trim()||F.cat,amount:total,paidBy:F.paidBy,shares,split:F.split,fixed:fixedP||{},category:F.cat,date:F.date||today(),note:F.note.trim(),
     createdAt:F.createdAt||Date.now(),updatedAt:Date.now(),addedBy:F.addedBy||S.me||''});
   if(ok){const saved=S.expenses.find(z=>z.id===id)||{id,title:F.title.trim()||F.cat,amount:total,paidBy:F.paidBy,shares};
     const ex=Object.assign({},saved,{title:F.title.trim()||F.cat,amount:total,paidBy:F.paidBy,shares});
@@ -749,7 +782,7 @@ function expenseDetail(id){
   const x=expenseUnits(e);
   const grp=x.groups.sort((a,b)=>(a.key===x.payerKey?-1:b.key===x.payerKey?1:b.total-a.total)).map(g=>{
     const fam=g.key.startsWith('f:');const head=fam||g.key===x.payerKey;
-    const lines=g.ids.map(k=>`<div class="kv" style="${head?'padding-left:12px;':''}"><span style="display:flex;gap:10px;align-items:center">${avs(k)}${esc(mName(k))}${k===S.me?' (you)':''}${fam&&relOf(k)?` <small class="hint">${esc(relOf(k))}</small>`:''}</span><span class="num" style="font-weight:600">${money(e.shares[k])}</span></div>`).join('');
+    const lines=g.ids.map(k=>`<div class="kv" style="${head?'padding-left:12px;':''}"><span style="display:flex;gap:10px;align-items:center">${avs(k)}${esc(mName(k))}${k===S.me?' (you)':''}${fam&&relOf(k)?` <small class="hint">${esc(relOf(k))}</small>`:''}${e.fixed&&e.fixed[k]!=null?' <span class="tag fixed">fixed</span>':''}</span><span class="num" style="font-weight:600">${money(e.shares[k])}</span></div>`).join('');
     return head?`<div style="margin-top:12px;border:1.5px solid var(--line);padding:4px 12px 2px;background:var(--card)"><div class="kv" style="border-top:0;font-weight:700"><span>${esc(unitLabel(g.key))}${g.key===x.payerKey?' · covered by '+esc(mName(e.paidBy)):''}</span><span class="num">${money(g.total)}</span></div>${lines}</div>`:lines;
   }).join('');
   const left=live(S.members).filter(m=>!(e.shares||{})[m.id]);
@@ -759,7 +792,7 @@ function expenseDetail(id){
     <p class="note">Paid by <b style="color:var(--text)">${esc(mName(e.paidBy))}</b>${isMaster(e.paidBy)?' (master of '+esc(famOf(e.paidBy).name)+')':''}${e.note?' · '+esc(e.note):''}</p>
     <div class="kv" style="border-top:0"><span>${famOf(e.paidBy)?esc(famOf(e.paidBy).name)+' share deducted':'Own share deducted'}</span><span class="num" style="font-weight:700">− ${money(x.covered)}</span></div>
     <div class="kv" style="font-weight:700"><span>To recover from others</span><span class="num get">${money(x.recover)}</span></div>
-    <span class="lbl" style="display:block;margin-top:18px">${Object.keys(e.shares||{}).length} shares · ${e.split==='exact'?'exact amounts':'split equally'}</span><div style="margin-top:2px">${grp}</div>
+    <span class="lbl" style="display:block;margin-top:18px">${Object.keys(e.shares||{}).length} shares · ${e.split==='custom'?'custom amounts':e.split==='exact'?'exact amounts':'split equally'}</span><div style="margin-top:2px">${grp}</div>
     ${left.length?`<p class="hint" style="margin-top:12px">Not included: ${left.map(m=>esc(m.name)).join(', ')}</p>`:''}
     ${acts.length?`<span class="lbl" style="display:block;margin-top:18px">Audit</span>${acts.map(a=>`<div class="kv" style="display:block"><small class="hint">${esc(when(a.at))}${a.by?' · by '+esc(mName(a.by)):''}</small><div style="font-size:14.5px">${esc(a.text)}</div></div>`).join('')}`:''}
     <div class="foot"><button class="btn" data-act="editExpense" data-id="${e.id}">Edit</button><button class="btn ghost" data-confirm="1" data-act="delExpense" data-id="${e.id}">Delete expense</button></div>`);
@@ -913,7 +946,7 @@ document.addEventListener('click',async e=>{
   if(act==='scrim'&&e.target!==el)return;
   if(el.dataset.confirm&&!el.classList.contains('armed')){
     document.querySelectorAll('.armed').forEach(b=>{b.classList.remove('armed');b.textContent=b.dataset.orig});
-    el.dataset.orig=el.textContent;el.classList.add('armed');el.textContent='Tap again to confirm';
+    el.dataset.orig=el.textContent;el.classList.add('armed');el.textContent=el.classList.contains('paybtn')?'Tap again: confirm paid':'Tap again to confirm';
     clearTimeout(armTimer);armTimer=setTimeout(()=>{if(el.isConnected&&el.classList.contains('armed')){el.classList.remove('armed');el.textContent=el.dataset.orig}},3500);return;
   }
   switch(act){
