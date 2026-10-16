@@ -1,14 +1,14 @@
-// Team Tally settings. Paste your Firebase web config below (Firebase console > Project settings > Your apps).
-// You can reuse the same Firebase project as your badminton app.
+// Team Tally settings (uses the same Firebase project as the badminton app).
 window.TALLY_CONFIG = {
-  // One id per group. Each group's data is kept separately under groups/<groupId> in Firestore.
+  // Each group's data is kept separately under groups/<groupId> in Firestore.
   groupId: "goa-waves",
   firebase: {
-    apiKey: "PASTE_API_KEY",
-    authDomain: "PASTE_PROJECT.firebaseapp.com",
-    projectId: "PASTE_PROJECT",
-    storageBucket: "PASTE_PROJECT.appspot.com",
-    messagingSenderId: "PASTE_SENDER_ID",
-    appId: "PASTE_APP_ID"
+    apiKey: "AIzaSyAlY9WxJ8Q_pbDiJQ2XQmsLpBug3KBtyPQ",
+    authDomain: "gg-dvg-badminton-league.firebaseapp.com",
+    projectId: "gg-dvg-badminton-league",
+    storageBucket: "gg-dvg-badminton-league.firebasestorage.app",
+    messagingSenderId: "426882143669",
+    appId: "1:426882143669:web:b8acbcafbbb47756a035fc",
+    measurementId: "G-10QL2YJ0GB"
   }
 };
