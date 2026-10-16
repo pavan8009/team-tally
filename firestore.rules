@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Team Tally: anyone with the app link can read and add/edit, but nothing can ever be hard-deleted.
+    // (The app only "soft deletes", so deleted items stay restorable.)
+    match /groups/{groupId} {
+      allow read, create, update: if true;
+      allow delete: if false;
+      match /{collection}/{docId} {
+        allow read: if true;
+        allow create, update: if request.resource.data.size() < 60;
+        allow delete: if false;
+      }
+    }
+
+    // >>> Keep your existing badminton app rules here, below this line. <<<
+  }
+}

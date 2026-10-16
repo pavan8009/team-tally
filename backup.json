@@ -1,0 +1,145 @@
+{
+  "app": "team-tally",
+  "version": 2,
+  "exportedAt": "2026-10-16T02:25:00Z",
+  "meta": {
+    "name": "Goa Waves"
+  },
+  "members": [
+    {
+      "id": "mvabhn4u1uya4p",
+      "name": "Pavan",
+      "upi": "",
+      "createdAt": 1792115823198
+    },
+    {
+      "id": "mvabhsn07v4hxr",
+      "name": "Santhosh",
+      "upi": "",
+      "createdAt": 1792115830332
+    },
+    {
+      "id": "mvabib2giwpn47",
+      "name": "Sunil",
+      "upi": "",
+      "createdAt": 1792115854216
+    },
+    {
+      "id": "mvabllg2u2plkz",
+      "name": "Manju",
+      "upi": "",
+      "createdAt": 1792116007634
+    },
+    {
+      "id": "mvablq74orz2oi",
+      "name": "Karthik",
+      "upi": "",
+      "createdAt": 1792116013792
+    },
+    {
+      "id": "mvablv1xxcmvsa",
+      "name": "Praveen",
+      "upi": "",
+      "createdAt": 1792116020085
+    },
+    {
+      "id": "mvabm3agtw9lzl",
+      "name": "Lakshmi",
+      "upi": "",
+      "createdAt": 1792116030760
+    },
+    {
+      "id": "mvabm8patd36u7",
+      "name": "Anusha",
+      "upi": "",
+      "createdAt": 1792116037774
+    },
+    {
+      "id": "mvabmc42xzfju9",
+      "name": "Ruchi",
+      "upi": "",
+      "createdAt": 1792116042194
+    },
+    {
+      "id": "mvabmf1iovs8g1",
+      "name": "Sneha",
+      "upi": "",
+      "createdAt": 1792116045990
+    },
+    {
+      "id": "mvabmo21k5k5ax",
+      "name": "Sheela",
+      "upi": "",
+      "createdAt": 1792116057673
+    },
+    {
+      "id": "mvabn6xfm13c9e",
+      "name": "Navya",
+      "upi": "",
+      "createdAt": 1792116082131
+    },
+    {
+      "id": "mvabnlz9n77ool",
+      "name": "Sevya",
+      "upi": "",
+      "createdAt": 1792116101637
+    },
+    {
+      "id": "mvabnq90ek1hbd",
+      "name": "Advik",
+      "upi": "",
+      "createdAt": 1792116107172
+    },
+    {
+      "id": "mvabnwakv3a8rj",
+      "name": "Prachi",
+      "upi": "",
+      "createdAt": 1792116115004
+    },
+    {
+      "id": "mvabo2g4x2pun6",
+      "name": "Vishwas",
+      "upi": "",
+      "createdAt": 1792116122980
+    },
+    {
+      "id": "mvabphoso01bl3",
+      "name": "Chinmay",
+      "upi": "",
+      "createdAt": 1792116189388
+    }
+  ],
+  "expenses": [
+    {
+      "id": "mvabt8rqfr3gx2",
+      "amount": 2000000,
+      "category": "Stay",
+      "createdAt": 1792116364454,
+      "date": "2026-10-16",
+      "note": "",
+      "paidBy": "mvabhn4u1uya4p",
+      "shares": {
+        "mvabhn4u1uya4p": 125000,
+        "mvabhsn07v4hxr": 125000,
+        "mvabib2giwpn47": 125000,
+        "mvabllg2u2plkz": 125000,
+        "mvablq74orz2oi": 125000,
+        "mvablv1xxcmvsa": 125000,
+        "mvabm3agtw9lzl": 125000,
+        "mvabm8patd36u7": 125000,
+        "mvabmc42xzfju9": 125000,
+        "mvabmf1iovs8g1": 125000,
+        "mvabmo21k5k5ax": 125000,
+        "mvabn6xfm13c9e": 125000,
+        "mvabnlz9n77ool": 125000,
+        "mvabnq90ek1hbd": 125000,
+        "mvabo2g4x2pun6": 125000,
+        "mvabphoso01bl3": 125000
+      },
+      "split": "equal",
+      "title": "Villa stay Booking",
+      "updatedAt": 1792116594936
+    }
+  ],
+  "settlements": []
+}
